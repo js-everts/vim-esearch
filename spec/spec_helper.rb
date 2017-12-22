@@ -5,6 +5,8 @@ require 'active_support/core_ext/numeric/time.rb'
 require 'retryable'
 Dir[File.expand_path('spec/support/**/*.rb')].each {|f| require f}
 
+SPEC_UTIL_ADAPTERS = ['ack', 'ag', 'git', 'grep', 'pt', 'rg'].freeze
+
 Vimrunner::RSpec.configure do |config|
   config.reuse_server = true
 
@@ -25,4 +27,11 @@ end
 RSpec.configure do |config|
   config.include Support::DSL::Vim
   config.include Support::DSL::ESearch
+end
+
+def wait_search_start
+  expect {
+    press("j") # press j to close "Press ENTER or type command to continue" prompt
+    bufname("%") =~ /Search/
+  }.to become_true_within(5.second)
 end

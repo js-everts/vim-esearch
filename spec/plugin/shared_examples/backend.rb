@@ -1,7 +1,5 @@
 RSpec.shared_examples 'a backend' do |backend, adapter|
-  ADAPTERS = ['ack', 'ag', 'git', 'grep', 'pt', 'rg']
-
-  ADAPTERS.each do |adapter|
+  SPEC_UTIL_ADAPTERS.each do |adapter|
     context "with #{adapter} adapter" do
       around do |example|
         working_directory = ENV.fetch('TRAVIS_BUILD_DIR', '$PWD')
@@ -34,12 +32,7 @@ def settings_dependent_context(type, settings)
   File.readlines("spec/fixtures/backend/#{type}.txt").map(&:chomp).each do |test_query|
     it "finds `#{test_query}`" do
       press ":call esearch#init()<Enter>#{test_query}<Enter>"
-      # require 'pry'; binding.pry
-
-      expect {
-        press("j") # press j to close "Press ENTER or type command to continue" prompt
-        bufname("%") =~ /Search/
-      }.to become_true_within(5.second)
+      wait_search_start
 
       expect { line(1) =~ /Finish/i }.to become_true_within(10.seconds),
         -> { "Expected first line to match /Finish/, got `#{line(1)}`" }
