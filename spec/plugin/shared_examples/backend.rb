@@ -1,5 +1,5 @@
 RSpec.shared_examples 'a backend' do |backend, adapter|
-  SPEC_UTIL_ADAPTERS.each do |adapter|
+  SEARCH_UTIL_ADAPTERS.each do |adapter|
     context "with #{adapter} adapter" do
       around do |example|
         working_directory = ENV.fetch('TRAVIS_BUILD_DIR', '$PWD')

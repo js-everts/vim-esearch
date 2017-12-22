@@ -5,7 +5,7 @@ require 'active_support/core_ext/numeric/time.rb'
 require 'retryable'
 Dir[File.expand_path('spec/support/**/*.rb')].each {|f| require f}
 
-SPEC_UTIL_ADAPTERS = ['ack', 'ag', 'git', 'grep', 'pt', 'rg'].freeze
+SEARCH_UTIL_ADAPTERS = ['ack', 'ag', 'git', 'grep', 'pt', 'rg'].freeze
 
 Vimrunner::RSpec.configure do |config|
   config.reuse_server = true
