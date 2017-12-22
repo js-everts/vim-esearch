@@ -8,7 +8,7 @@ Dir[File.expand_path('spec/support/**/*.rb')].each {|f| require f}
 SEARCH_UTIL_ADAPTERS = ['ack', 'ag', 'git', 'grep', 'pt', 'rg'].freeze
 
 Vimrunner::RSpec.configure do |config|
-  config.reuse_server = true
+  config.reuse_server = false
 
   plug_path    = Pathname.new(File.expand_path('../../', __FILE__))
   vimproc_path = plug_path.join('.dep', 'vimproc.vim')

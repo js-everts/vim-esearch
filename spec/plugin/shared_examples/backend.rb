@@ -1,23 +1,12 @@
 RSpec.shared_examples 'a backend' do |backend, adapter|
   SEARCH_UTIL_ADAPTERS.each do |adapter|
     context "with #{adapter} adapter" do
-      around do |example|
-        working_directory = ENV.fetch('TRAVIS_BUILD_DIR', '$PWD')
-        press ":cd #{working_directory}<Enter>"
-        press ':cd spec/fixtures/backend/<Enter>'
-        esearch_settings(backend: backend, adapter: adapter, out: 'win')
-
-        example.run
-
-        cmd('close!') if bufname("%") =~ /Search/
-      end
-
       context 'literal' do
-        settings_dependent_context('literal', regex: 0)
+        settings_dependent_context(backend, adapter, 'literal', regex: 0)
       end
 
       context 'regex' do
-        settings_dependent_context('regex', regex: 1)
+        settings_dependent_context(backend, adapter, 'regex', regex: 1)
       end
     end
   end
@@ -25,11 +14,18 @@ RSpec.shared_examples 'a backend' do |backend, adapter|
   include_context 'dumpable'
 end
 
-# TODO
-def settings_dependent_context(type, settings)
-  before { esearch_settings(settings) }
+# TODO completely rewrite
+def settings_dependent_context(backend, adapter, matching_type, settings)
+  before do
+    working_directory = ENV.fetch('TRAVIS_BUILD_DIR', '$PWD')
+    press ":cd #{working_directory}<Enter>"
+    press ':cd spec/fixtures/backend/<Enter>'
+    esearch_settings(backend: backend, adapter: adapter, out: 'win')
+    esearch_settings(settings)
+  end
+  after { cmd('close!') if bufname("%") =~ /Search/ }
 
-  File.readlines("spec/fixtures/backend/#{type}.txt").map(&:chomp).each do |test_query|
+  File.readlines("spec/fixtures/backend/#{matching_type}.txt").map(&:chomp).each do |test_query|
     it "finds `#{test_query}`" do
       press ":call esearch#init()<Enter>#{test_query}<Enter>"
       wait_search_start
