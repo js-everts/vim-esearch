@@ -35,3 +35,23 @@ def wait_search_start
     bufname("%") =~ /Search/
   }.to become_true_within(5.second)
 end
+
+
+def wait_quickfix_enter
+  expect {
+    expr('&filetype') == 'qf'
+  }.to become_true_within(5.second)
+end
+
+
+def ascii(str)
+  require 'iconv'
+  Iconv.conv('ASCII//IGNORE', 'UTF8', str)
+end
+
+def ps_aux_without_sh_delegate_command
+  `ps aux`
+    .split("\n")
+    .reject { |l| l.include?('sh -c') }
+    .join("\n")
+end
