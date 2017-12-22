@@ -133,7 +133,7 @@ endfu
 fu! esearch#backend#vimproc#abort(bufnr) abort
   let esearch = getbufvar(a:bufnr, 'esearch', 0)
   let esearch.request.aborted = 1
-  return empty(esearch) ?  0 : esearch.request.pipe.kill(g:vimproc#SIGTERM)
+  return (empty(esearch) ? 0 : esearch.request.pipe.kill(g:vimproc#SIGKILL))
 endfu
 
 fu! esearch#backend#vimproc#init_events() abort

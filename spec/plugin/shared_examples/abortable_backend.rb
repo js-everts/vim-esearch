@@ -63,4 +63,6 @@ RSpec.shared_examples 'an abortable backend' do |backend|
         .to become_true_within(10.seconds)
     end
   end
+
+  include_context 'dumpable'
 end
