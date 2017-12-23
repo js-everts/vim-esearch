@@ -11,7 +11,7 @@ task :dump do
 end
 
 task :test do
-  cmd = 'rspec spec --order rand'
+  cmd = 'rspec spec --color --order rand --format doc'
   puts "Starting to run #{cmd}..."
   sh "bundle exec #{cmd}"
   raise "#{cmd} failed!" unless $?.exitstatus == 0

@@ -4,7 +4,10 @@ RSpec.shared_examples 'an abortable backend' do |backend|
   let(:out) { 'win' }
 
   before { esearch_settings(backend: backend, adapter: adapter, out: out) }
-  after { `ps aux | grep #{search_string} | awk '$0=$2' | xargs kill` }
+  after do
+    `ps aux | grep #{search_string} | awk '$0=$2' | xargs kill`
+    cmd('close!') if bufname("%") =~ /Search/ || expr('&ft') == 'qf'
+  end
 
   context '#out#win' do
     let(:out) { 'win' }

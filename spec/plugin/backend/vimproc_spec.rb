@@ -7,7 +7,7 @@ context 'esearch' do
   context '#backend' do
     describe '#vimproc' do
       it_behaves_like 'a backend', 'vimproc'
-      it_behaves_like 'an abortable backend', 'vim8'
+      it_behaves_like 'an abortable backend', 'vimproc'
     end
   end
 end

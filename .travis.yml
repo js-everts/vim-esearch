@@ -14,7 +14,7 @@ cache:
     - $HOME/.rvm
 
 before_script:
-  - bash install_dependencies.sh
+  - bash .ci/install_vim_dependencies.sh
   - bundle install
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then bash .ci/install_osx.sh; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash .ci/install_linux.sh; fi
