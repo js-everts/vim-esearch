@@ -23,7 +23,7 @@ def settings_dependent_context(backend, adapter, matching_type, settings)
     esearch_settings(backend: backend, adapter: adapter, out: 'win')
     esearch_settings(settings)
   end
-  after { cmd('close!') if bufname("%") =~ /Search/ }
+  after { cmd('bdelete') if bufname("%") =~ /Search/ }
 
   File.readlines("spec/fixtures/backend/#{matching_type}.txt").map(&:chomp).each do |test_query|
     it "finds `#{test_query}`" do
