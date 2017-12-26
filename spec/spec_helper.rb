@@ -48,3 +48,7 @@ def ps_aux_without_sh_delegate_command
     .reject { |l| l.include?('sh -c') }
     .join("\n")
 end
+
+def working_directory
+  @working_directory ||= ENV.fetch('TRAVIS_BUILD_DIR') { Pathname.new(File.expand_path('../../', __FILE__)) }
+end

@@ -17,9 +17,7 @@ end
 # TODO completely rewrite
 def settings_dependent_context(backend, adapter, matching_type, settings)
   before do
-    working_directory = ENV.fetch('TRAVIS_BUILD_DIR', '$PWD')
-    press ":cd #{working_directory}<Enter>"
-    press ':cd spec/fixtures/backend/<Enter>'
+    press ":cd #{working_directory}/spec/fixtures/backend/<Enter>"
     esearch_settings(backend: backend, adapter: adapter, out: 'win')
     esearch_settings(settings)
   end
