@@ -2,26 +2,23 @@ if exists('b:current_syntax')
   finish
 endif
 
-syn match  esearchTitle   '^\%1l.*'
-syn match  esearchFName   '^\%>2l.*'
-syn match  esearchContext '^\%>2l\s\+.*'
-syn match  esearchLnum    '^\%>2l\s\+\d\+'
+syn match ESearchTitle      '^\%1l.*'
+syn match ESearchFileName   '^\%>2l.*'
+syn match ESearchContext    '^\%>2l\s\+.*'
+syn match ESearchLineNumber '^\%>2l\s\+\d\+'
 
+exe 'syn match ESearchOmission "\%(^\%>3l\s\+\d\+\s\)\@<=\V'. g:esearch#util#trunc_omission.'"'
+exe 'syn match ESearchOmission "\V'. g:esearch#util#trunc_omission.'\$"'
 
+hi link ESearchTitle      Title
+hi link ESearchContext    Normal
+hi link ESearchLineNumber LineNr
 
-
-exe 'syn match esearchOmission "\%(^\%>3l\s\+\d\+\s\)\@<=\V'. g:esearch#util#trunc_omission.'"'
-exe 'syn match esearchOmission "\V'. g:esearch#util#trunc_omission.'\$"'
-
-hi link esearchTitle Title
-hi link esearchContext Normal
-hi link esearchLnum LineNr
-
-if !hlexists('esearchOmission')
-  hi esearchOmission ctermfg=yellow
+if !hlexists('ESearchOmission')
+  hi ESearchOmission ctermfg=yellow
 endif
 
-exe 'hi esearchFName cterm=bold gui=bold ' .
+exe 'hi ESearchFileName cterm=bold gui=bold ' .
       \ 'ctermbg='.esearch#util#highlight_attr('Directory', 'bg', 'cterm', 0).' '.
       \ 'ctermfg='.esearch#util#highlight_attr('Directory', 'fg', 'cterm', 12).' '.
       \ 'guibg=' . esearch#util#highlight_attr('Directory', 'bg', 'gui',   '#005FFF').' '.
