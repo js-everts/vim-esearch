@@ -4,11 +4,11 @@ endif
 
 syn match ESearchTitle      '^\%1l.*'
 syn match ESearchFileName   '^\%>2l.*'
-syn match ESearchLineNumber '^\%>2l\s\+\d\+'
-syn match ESearchContext    '^\%>2l\s\+.*'
+syn match ESearchContext    '^\s\+.*' contains=ESearchLineNumber,ESearchOmission
+syn match ESearchLineNumber '^\s\+\zs\d\+\ze' contained
 
-exe 'syn match ESearchOmission "\%(^\%>3l\s\+\d\+\s\)\@<=\V'. g:esearch#util#trunc_omission.'"'
-exe 'syn match ESearchOmission "\V'. g:esearch#util#trunc_omission.'\$"'
+exe 'syn match ESearchOmission "\%(^\%>3l\s\+\d\+\s\)\@<=\V'. g:esearch#util#trunc_omission.'" contained'
+exe 'syn match ESearchOmission "\V'. g:esearch#util#trunc_omission.'\$" contained'
 
 
 hi default link ESearchTitle Title
