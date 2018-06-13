@@ -11,6 +11,4 @@ for mapping in esearch#_mappings()
   exe 'map ' . mapping.lhs . ' ' . mapping.rhs
 endfor
 
-if !hlexists('ESearchSubstitute')
-  hi link ESearchSubstitute DiffChange
-endif
+hi default link ESearchSubstitute DiffChange
