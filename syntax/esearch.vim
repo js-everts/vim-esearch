@@ -4,8 +4,8 @@ endif
 
 syn match ESearchTitle      '^\%1l.*'
 syn match ESearchFileName   '^\%>2l.*'
-syn match ESearchContext    '^\%>2l\s\+.*'
 syn match ESearchLineNumber '^\%>2l\s\+\d\+'
+syn match ESearchContext    '^\%>2l\s\+.*'
 
 exe 'syn match ESearchOmission "\%(^\%>3l\s\+\d\+\s\)\@<=\V'. g:esearch#util#trunc_omission.'"'
 exe 'syn match ESearchOmission "\V'. g:esearch#util#trunc_omission.'\$"'
